@@ -1,0 +1,27 @@
+positiveInteger "+"[0-9]"+"
+negativeInteger "-"[0-9]"-"
+positiveFloat "+"[0-9]"+"
+negativeFloat "-"[0-9]"-"
+
+%{
+    #include<stdio.h>
+    FILE *intFile, *floatFile;
+%}
+
+%%
+{positiveFloat} fprintf(floatFile,"%s\n",yytext);
+{positiveInteger} fprintf(intFile,"%s\n",yytext);
+{negativeFloat} fprintf(floatFile,"%s",yytext);
+{negativeInteger} fpintf(intFile,"%s",yytext);
+.;
+
+%%
+int main()
+{
+    FILE *fp;
+    fp = fopen("input.txt","r");
+    intFile = fopen("IntOut.txt","w");
+    floatFile = fopen("floatOut.txt","w");
+    yyin = fp;
+    yylex();
+}
